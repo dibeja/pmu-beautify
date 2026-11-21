@@ -14,7 +14,7 @@ Always talk to the user in their language. Keep option names (`--guard` etc.) ou
 - **Help** — the user writes `pmu-beautify help` (or just `help` while using the skill), asks how it works or what they can ask: show [HELP.md](HELP.md) translated into their language, then offer the wizard.
 - **Wizard** — the user writes `pmu-beautify wizard` or asks to be guided step by step, or invokes the skill without a file or without saying who is in it: ask the questions below **one at a time**, waiting for each answer, skipping any the user already answered. Then say in one line what you will do and run it.
 
-  If your agent has a multiple-choice question tool (e.g. `AskUserQuestion` in Claude Code), use it for every question that has choices, with the recommended option first and a free-text answer allowed; it takes at most 4 options, so with more people than that ask in two steps. If it has no such tool, ask in chat with numbered options. Question 1 is always asked in chat (a path cannot be picked from a list).
+  If your agent has a multiple-choice question tool that **waits for the user's choice and returns it** (e.g. `AskUserQuestion` in Claude Code), use it for every question that has choices, with the recommended option first and a free-text answer allowed; it takes at most 4 options, so with more people than that ask in two steps. Do not use a tool that returns before the user has answered (e.g. Codex's `request_user_input_async`, which only says "accepted"): its panel closes when your turn ends. Without a waiting tool, ask in chat with numbered options and end your turn; the user replies with a number or a word. Question 1 is always asked in chat (a path cannot be picked from a list).
   1. **File** — which photo or video? (path, or drag it into the chat)
   2. **Who is in it** — the artist (the user) / a client wearing PMU / more than one person? If more than one: retouch one of them, or each of them? Then confirm who is who (e.g. "the artist is the one in the apron, 0–11 s?") and whether each wears PMU. The reference moments are found by you (see "More than one person"); ask for a separate photo of a person only when they are never alone in the shot. Questions 3 and 4 may then be answered per person.
   3. **Strength** — subtle / natural (recommended) / strong → `--amount 0.4 / 0.6 / 0.8`
@@ -48,6 +48,8 @@ Every command below uses:
 ## Retouch
 
 Photo in → photo out, video in → `.mp4` out. Pick the output extension from the input: a photo (`.jpg .jpeg .png .heic .webp .tif`) gets `.jpg` (or `.png` if the input was PNG); a video gets `.mp4`. Never overwrite the original: write next to it as `<name>-beautify.<ext>`.
+
+**Never rotate, crop or resize the input yourself.** The output must have the same orientation and size as the original. The script finds faces that are sideways or upside down and faces cut off by the frame (only eyes and forehead visible, say), so give it the file exactly as it is. If it reports the face missed, tell the user; do not "fix" the image before retouching.
 
 ```bash
 $PY $S/retouch.py IN OUT --guard 0.06            # client with PMU: the default
