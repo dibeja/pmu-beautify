@@ -32,6 +32,7 @@ import argparse
 import json
 import os
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -170,7 +171,13 @@ def slim_warp(f, pts, face_w, slim):
 
 
 def read_photo(path):
-    """cv2.imread applies EXIF rotation; HEIC (iPhone) goes through macOS sips first."""
+    """cv2.imread applies EXIF rotation; HEIC (iPhone) goes through macOS sips, or pillow-heif elsewhere."""
+    if Path(path).suffix.lower() in (".heic", ".heif") and sys.platform != "darwin":
+        from PIL import Image, ImageOps
+        from pillow_heif import register_heif_opener
+        register_heif_opener()
+        rgb = np.asarray(ImageOps.exif_transpose(Image.open(path)).convert("RGB"))
+        return cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
     if Path(path).suffix.lower() in (".heic", ".heif"):
         with tempfile.TemporaryDirectory() as d:
             jpg = str(Path(d) / "in.jpg")
@@ -199,7 +206,7 @@ def main():
     ap.add_argument("--debug-mask", action="store_true")
     a = ap.parse_args()
     if not MODEL.exists():
-        raise SystemExit(f"models missing in {HOME}: run scripts/setup.sh first")
+        raise SystemExit(f"models missing in {HOME}: run scripts/setup.sh (macOS) or scripts/setup.ps1 (Windows) first")
 
     still = Path(a.src).suffix.lower() in PHOTO
     if still and Path(a.dst).suffix.lower() not in (".jpg", ".jpeg", ".png"):

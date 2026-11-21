@@ -1,23 +1,43 @@
 ---
 name: pmu-beautify
-description: Face-aware skin retouch ("beauty" / "beautify" pass) for photos and videos of permanent-makeup (PMU) artists and their clients — smooths lines, blotches and under-eye texture while keeping pores, and never touches brows, eyes, lips or the PMU work itself. Optional before/after comparison, jaw slim, teeth whitening, and retouching only one chosen person in a group shot. Use whenever the user wants to beautify, retouch, smooth skin, "ritocca la pelle", "fai il beauty", "bőrretus", soften wrinkles on a face in a photo or a video (reel, story, testimonial, talking head), even if they only drop a file and say "make her skin nicer". macOS only.
+description: Face-aware skin retouch ("beauty" / "beautify" pass) for photos and videos of permanent-makeup (PMU) artists and their clients — smooths lines, blotches and under-eye texture while keeping pores, and never touches brows, eyes, lips or the PMU work itself. Optional before/after comparison, jaw slim, teeth whitening, and retouching only one chosen person in a group shot. Has a help page and a step-by-step wizard. Use whenever the user wants to beautify, retouch, smooth skin, "ritocca la pelle", "fai il beauty", "bőrretus", soften wrinkles on a face in a photo or a video (reel, story, testimonial, talking head), even if they only drop a file and say "make her skin nicer", or asks "pmu-beautify help" / "how does pmu-beautify work". macOS and Windows.
 ---
 
 # pmu-beautify
 
 Skin retouch for photos and video, built for PMU (permanent makeup) studios: the skin gets cleaner, the tattooed work stays exactly as it is.
 
+Always talk to the user in their language. Keep option names (`--guard` etc.) out of what you say unless they ask: describe the effect instead.
+
+## Help and wizard
+
+- **Help** — the user writes `help`, `aiuto`, `segítség`, `hilfe`, asks how it works or what they can ask: show [HELP.md](HELP.md) translated into their language, then offer the wizard.
+- **Wizard** — the user asks for it ("guidami", "wizard", "step by step"), or invokes the skill without a file or without saying who is in it: ask the questions below **one at a time**, waiting for each answer, skipping any the user already answered. Then say in one line what you will do and run it.
+  1. **File** — which photo or video? (path, or drag it into the chat)
+  2. **Who is in it** — the artist (the user) / a client wearing PMU / more than one person? If more than one: who should be retouched? (for a video, a moment where that person is alone; for a photo, a separate photo of that person alone)
+  3. **Strength** — subtle / natural (recommended) / strong → `--amount 0.4 / 0.6 / 0.8`
+  4. **Extras** — none (recommended) / slimmer jaw / whiter teeth / both
+  5. **Video only: which part** — whole video, or from second X for Y seconds?
+  6. **Comparison** — also make a before/after side-by-side? If yes, the two labels in their language.
+
 ## First run: install what is missing
 
-Before the first retouch, check for `~/.pmu-beautify/.ready` (or `$PMU_BEAUTIFY_HOME/.ready`). If it is missing, run:
+Before the first retouch, check for the `.ready` file in the pmu-beautify home: `~/.pmu-beautify/.ready` on macOS, `%USERPROFILE%\.pmu-beautify\.ready` on Windows (or `$PMU_BEAUTIFY_HOME/.ready` if that variable is set). If it is missing, run the setup for the user's system:
 
 ```bash
-bash <this skill's folder>/scripts/setup.sh
+bash <this skill's folder>/scripts/setup.sh                                          # macOS
+powershell -ExecutionPolicy Bypass -File "<this skill's folder>\scripts\setup.ps1"   # Windows
 ```
 
-It installs ffmpeg and Python 3.12 with Homebrew, a private venv in `~/.pmu-beautify/venv` (mediapipe, opencv, numpy) and two face models (~42 MB, SHA-256 checked). It is safe to re-run. If it exits with code 2, Homebrew is missing: show the user the command the script printed (it needs their Mac password, so they run it themselves), then run setup again.
+It installs ffmpeg and Python 3.12 (Homebrew on macOS, winget on Windows), a private venv (mediapipe, opencv, numpy) and two face models (~42 MB, SHA-256 checked). It is safe to re-run. Exit codes:
+- **2** — the package manager is missing (Homebrew on macOS, winget on Windows): show the user what the script printed (Homebrew needs their Mac password, so they run it themselves), then run setup again.
+- **4** (Windows) — something was installed but is not on PATH yet: ask the user to open a new terminal / restart the agent, then run setup again.
 
-Every command below uses `PY=~/.pmu-beautify/venv/bin/python` and `S=<this skill's folder>/scripts`.
+The Windows setup has not been tested on a real Windows machine yet: if a step fails, show the user the exact error and fix the step rather than guessing.
+
+Every command below uses:
+- macOS: `PY=~/.pmu-beautify/venv/bin/python`, `S=<this skill's folder>/scripts`
+- Windows: `PY=%USERPROFILE%\.pmu-beautify\venv\Scripts\python.exe`, `S=<this skill's folder>\scripts` (quote paths with spaces)
 
 ## The rule that is never broken
 
@@ -64,4 +84,4 @@ Photo pair → `.jpg`, video pair → `.mp4` (audio from BEFORE). Labels in the 
 
 ## Check before handing over
 
-Look at the result (for a video, extract a frame with ffmpeg) and check the eyes and lips: eyeliner, lip line and brows must be identical to the original. Then tell the user the output path and the settings used.
+Look at the result (for a video, extract a frame with ffmpeg) and check the eyes and lips: eyeliner, lip line and brows must be identical to the original. Then tell the user the output path and the settings used, in plain words.

@@ -9,7 +9,7 @@ HOME_DIR="${PMU_BEAUTIFY_HOME:-$HOME/.pmu-beautify}"
 VENV="$HOME_DIR/venv"
 MODELS="$HOME_DIR/models"
 
-[ "$(uname)" = Darwin ] || { echo "pmu-beautify setup supports macOS only."; exit 1; }
+[ "$(uname)" = Darwin ] || { echo "This setup is for macOS. On Windows run: powershell -ExecutionPolicy Bypass -File scripts\\setup.ps1"; exit 1; }
 
 if ! command -v brew >/dev/null 2>&1; then
   for b in /opt/homebrew/bin/brew /usr/local/bin/brew; do [ -x "$b" ] && eval "$("$b" shellenv)" && break; done
