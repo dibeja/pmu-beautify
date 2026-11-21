@@ -1,24 +1,29 @@
 # pmu-beautify
 
-A [Claude Code](https://claude.com/claude-code) skill that retouches skin in **photos and videos** for permanent-makeup (PMU) studios: lines, blotches and under-eye texture go down, pores stay, and **brows, eyes, lips and the PMU work are never touched**.
+An [Agent Skill](https://agentskills.io) for **Claude Code, OpenAI Codex, Gemini CLI, Cursor** and other agents that read `SKILL.md` skills. It retouches skin in **photos and videos** for permanent-makeup (PMU) studios: lines, blotches and under-eye texture go down, pores stay, and **brows, eyes, lips and the PMU work are never touched**.
 
 🇮🇹 [Italiano più sotto](#italiano)
 
 ## Install
 
-**Easiest — ask Claude Code:**
-
-> Install the skill from https://github.com/dibeja/pmu-beautify into ~/.claude/skills/pmu-beautify
-
-**Terminal:**
+**Any agent — one command** (asks which agents and whether to install for all your projects):
 
 ```bash
-git clone https://github.com/dibeja/pmu-beautify ~/.claude/skills/pmu-beautify
+npx skills add dibeja/pmu-beautify
 ```
 
-**Zip:** download `pmu-beautify.zip` from [Releases](https://github.com/dibeja/pmu-beautify/releases/latest) and unzip it into `~/.claude/skills/` (you get `~/.claude/skills/pmu-beautify/`).
+**Or by hand** — clone into your agent's skills folder:
 
-Then restart Claude Code.
+| Agent | Command |
+|---|---|
+| Claude Code | `git clone https://github.com/dibeja/pmu-beautify ~/.claude/skills/pmu-beautify` |
+| Codex, Gemini CLI, Cursor | `git clone https://github.com/dibeja/pmu-beautify ~/.agents/skills/pmu-beautify` |
+
+**Or ask your agent:** *"Install the skill from https://github.com/dibeja/pmu-beautify"* (in Codex you can also use `$skill-installer`).
+
+**Zip:** download `pmu-beautify.zip` from [Releases](https://github.com/dibeja/pmu-beautify/releases/latest) and unzip it into the skills folder above.
+
+Then restart your agent.
 
 ## First use
 
@@ -29,7 +34,7 @@ Just ask: *"beautify this photo: ~/Desktop/client.jpg"*. On the first run the sk
 - a private Python environment in `~/.pmu-beautify/` with mediapipe, opencv, numpy
 - two face models (~42 MB): [MediaPipe Face Landmarker](https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker) and [OpenCV SFace](https://github.com/opencv/opencv_zoo/tree/main/models/face_recognition_sface)
 
-To remove everything: delete `~/.claude/skills/pmu-beautify` and `~/.pmu-beautify`.
+To remove everything: delete the `pmu-beautify` folder from your agent's skills folder and `~/.pmu-beautify`.
 
 ## What you can ask
 
@@ -45,23 +50,28 @@ To remove everything: delete `~/.claude/skills/pmu-beautify` and `~/.pmu-beautif
 
 ## Italiano
 
-Skill per [Claude Code](https://claude.com/claude-code) che ritocca la pelle in **foto e video** per studi di trucco permanente (PMU): rughe, macchie e occhiaie si attenuano, i pori restano, e **sopracciglia, occhi, labbra e il lavoro PMU non vengono mai toccati**.
+[Agent Skill](https://agentskills.io) per **Claude Code, OpenAI Codex, Gemini CLI, Cursor** e gli altri agenti che leggono le skill `SKILL.md`. Ritocca la pelle in **foto e video** per studi di trucco permanente (PMU): rughe, macchie e occhiaie si attenuano, i pori restano, e **sopracciglia, occhi, labbra e il lavoro PMU non vengono mai toccati**.
 
 ### Installazione
 
-**La più semplice — chiedi a Claude Code:**
-
-> Installa la skill da https://github.com/dibeja/pmu-beautify in ~/.claude/skills/pmu-beautify
-
-**Da Terminale:**
+**Qualsiasi agente — un comando** (chiede per quali agenti e se installarla per tutti i progetti):
 
 ```bash
-git clone https://github.com/dibeja/pmu-beautify ~/.claude/skills/pmu-beautify
+npx skills add dibeja/pmu-beautify
 ```
 
-**Zip:** scarica `pmu-beautify.zip` dalle [Releases](https://github.com/dibeja/pmu-beautify/releases/latest) e scompattalo in `~/.claude/skills/` (ottieni `~/.claude/skills/pmu-beautify/`).
+**Oppure a mano** — clona nella cartella skill del tuo agente:
 
-Poi riavvia Claude Code.
+| Agente | Comando |
+|---|---|
+| Claude Code | `git clone https://github.com/dibeja/pmu-beautify ~/.claude/skills/pmu-beautify` |
+| Codex, Gemini CLI, Cursor | `git clone https://github.com/dibeja/pmu-beautify ~/.agents/skills/pmu-beautify` |
+
+**Oppure chiedilo al tuo agente:** *"Installa la skill da https://github.com/dibeja/pmu-beautify"* (in Codex puoi usare anche `$skill-installer`).
+
+**Zip:** scarica `pmu-beautify.zip` dalle [Releases](https://github.com/dibeja/pmu-beautify/releases/latest) e scompattalo nella cartella skill indicata sopra.
+
+Poi riavvia l'agente.
 
 ### Primo utilizzo
 
@@ -72,7 +82,7 @@ Chiedi e basta: *"ritocca la pelle in questa foto: ~/Desktop/cliente.jpg"*. Alla
 - un ambiente Python dedicato in `~/.pmu-beautify/` con mediapipe, opencv, numpy
 - due modelli per il volto (~42 MB): [MediaPipe Face Landmarker](https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker) e [OpenCV SFace](https://github.com/opencv/opencv_zoo/tree/main/models/face_recognition_sface)
 
-Per rimuovere tutto: cancella `~/.claude/skills/pmu-beautify` e `~/.pmu-beautify`.
+Per rimuovere tutto: cancella la cartella `pmu-beautify` dalla cartella skill del tuo agente e `~/.pmu-beautify`.
 
 ### Cosa puoi chiedere
 

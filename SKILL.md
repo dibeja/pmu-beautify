@@ -64,4 +64,4 @@ Photo pair → `.jpg`, video pair → `.mp4` (audio from BEFORE). Labels in the 
 
 ## Check before handing over
 
-Open (Read) the result or a frame of it and look at the eyes and lips: eyeliner, lip line and brows must be identical to the original. Then tell the user the output path and the settings used.
+Look at the result (for a video, extract a frame with ffmpeg) and check the eyes and lips: eyeliner, lip line and brows must be identical to the original. Then tell the user the output path and the settings used.

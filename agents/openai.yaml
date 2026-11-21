@@ -1,0 +1,4 @@
+interface:
+  display_name: "PMU Beautify"
+  short_description: "Skin retouch for photos and video; PMU work never touched"
+  default_prompt: "Retouch the skin in this photo or video, keeping the PMU untouched:"
