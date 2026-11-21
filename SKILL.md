@@ -61,6 +61,7 @@ $PY $S/retouch.py IN.mp4 OUT.mp4 --ss 12 --t 8   # only a segment of a video
 |---|---|---|
 | `--amount` | how much line/blotch detail is removed (0..1) | 0.6 natural; 0.4 subtle; >0.8 looks plastic |
 | `--even` | evens out redness/shine patches | 0.1; above 0.2 the cheeks lose colour |
+| `--no-keep-edges` | also softens strong dark edges (nostril rims, nose contour) | off: those edges stay sharp, so a high `--amount` does not blur the nose |
 | `--guard` | widens protected brow/eye/lip zones (fraction of face width) | 0 own face; **0.06 with PMU** |
 | `--slim` | narrows jaw, lifts chin (nose never touched) | off; 0.02–0.03 max, it also warps hair/collar near the jaw |
 | `--teeth` | takes yellow out of teeth only | off; 0.5 natural |

@@ -18,6 +18,8 @@ Light and colour are NOT done here.
 --amount  how much of the line/blotch band to remove (0..1). 0.6 = natural, no plastic look.
 --even    flattens large-scale tone patches (redness, shine) toward local average.
           Above ~0.2 it takes the colour out of the cheeks.
+--no-keep-edges  also soften strong dark edges (nostril rims, nose contour). By default they stay
+          sharp, so a high --amount smooths skin without blurring the nose.
 --guard   widens the protected brow/eye/lip zones by this fraction of face width.
           0.06 keeps eyeliner and lip-liner PMU untouched (fine lines right there stay too).
 --slim    narrows the jaw and lifts the chin (fraction, e.g. 0.03 = 3%), off by default.
@@ -107,7 +109,7 @@ def mask_for(pts, shape, face_w, guard=0.0):
     return cv2.GaussianBlur(m, (k, k), 0).astype(np.float32)[..., None] / 255
 
 
-def retouch(f, m, face_w, amount, even):
+def retouch(f, m, face_w, amount, even, keep_edges=True):
     x = f.astype(np.float32)
     s = face_w / 500  # filter radii scale with face size
     fine = cv2.GaussianBlur(x, (0, 0), 0.7 * s)
@@ -117,7 +119,15 @@ def retouch(f, m, face_w, amount, even):
     low = cv2.resize(cv2.GaussianBlur(small, (0, 0), 7.5 * s), (x.shape[1], x.shape[0]), interpolation=cv2.INTER_LINEAR)
     # amount * (fine - mid) [lines, small blotches] + even * (mid - low) [larger patches], in cv2 for speed
     d = cv2.scaleAdd(low, -even, cv2.addWeighted(fine, amount, mid, even - amount, 0))
-    y = cv2.subtract(x, cv2.multiply(d, cv2.merge([m[..., 0]] * 3)))
+    w = m[..., 0]
+    if keep_edges:
+        # keep strong dark edges (nostril rims, nose contour, deep shadows): lines and blotches are faint
+        # in the fine-mid band, structure is not; without it a high --amount blurs the nostrils like bokeh.
+        # Same rule as the PWA (pmu-beautify-pwa src/retouch.ts).
+        dark = np.maximum(0, -cv2.transform(cv2.subtract(fine, mid), np.array([[0.114, 0.587, 0.299]], np.float32)).reshape(w.shape) / 255)
+        t = np.clip((dark - 0.018) / (0.06 - 0.018), 0, 1)
+        w = w * (1 - t * t * (3 - 2 * t))
+    y = cv2.subtract(x, cv2.multiply(d, cv2.merge([w] * 3)))
     return np.clip(y, 0, 255, out=y).astype(np.uint8)
 
 
@@ -198,6 +208,7 @@ def main():
     ap.add_argument("--ss", type=float); ap.add_argument("--t", type=float)
     ap.add_argument("--amount", type=float, default=0.6)
     ap.add_argument("--even", type=float, default=0.1)
+    ap.add_argument("--no-keep-edges", dest="keep_edges", action="store_false", help="also soften strong dark edges (nostril rims, nose contour); by default they stay sharp")
     ap.add_argument("--smooth", type=float, default=0.6, help="landmark EMA, 0 = none")
     ap.add_argument("--slim", type=float, default=0.0)
     ap.add_argument("--teeth", type=float, default=0.0)
@@ -278,7 +289,7 @@ def main():
             pts = prev.astype(np.int32)
             face_w = float(np.ptp(pts[OVAL, 0]))
             m = mask_for(pts, (h, w), face_w, a.guard)
-            out = (m * 255).astype(np.uint8).repeat(3, 2) if a.debug_mask else retouch(f, m, face_w, a.amount, a.even)
+            out = (m * 255).astype(np.uint8).repeat(3, 2) if a.debug_mask else retouch(f, m, face_w, a.amount, a.even, a.keep_edges)
             if a.teeth and not a.debug_mask:  # unsmoothed points: the mouth moves too fast for the EMA
                 out = whiten_teeth(out, raw.astype(np.int32), face_w, a.teeth)
             if a.slim and not a.debug_mask:
