@@ -14,7 +14,7 @@ Always talk to the user in their language. Keep option names (`--guard` etc.) ou
 - **Help** — the user writes `pmu-beautify help` (or just `help` while using the skill), asks how it works or what they can ask: show [HELP.md](HELP.md) translated into their language, then offer the wizard.
 - **Wizard** — the user writes `pmu-beautify wizard` or asks to be guided step by step, or invokes the skill without a file or without saying who is in it: ask the questions below **one at a time**, waiting for each answer, skipping any the user already answered. Then say in one line what you will do and run it.
   1. **File** — which photo or video? (path, or drag it into the chat)
-  2. **Who is in it** — the artist (the user) / a client wearing PMU / more than one person? If more than one: who should be retouched? (for a video, a moment where that person is alone; for a photo, a separate photo of that person alone)
+  2. **Who is in it** — the artist (the user) / a client wearing PMU / more than one person? If more than one: retouch one of them, or each of them? Then confirm who is who (e.g. "the artist is the one in the apron, 0–11 s?") and whether each wears PMU. The reference moments are found by you (see "More than one person"); ask for a separate photo of a person only when they are never alone in the shot. Questions 3 and 4 may then be answered per person.
   3. **Strength** — subtle / natural (recommended) / strong → `--amount 0.4 / 0.6 / 0.8`
   4. **Extras** — none (recommended) / slimmer jaw / whiter teeth / both
   5. **Video only: which part** — whole video, or from second X for Y seconds?
@@ -65,6 +65,22 @@ $PY $S/retouch.py IN.mp4 OUT.mp4 --ss 12 --t 8   # only a segment of a video
 | `--debug-mask` | writes the mask (white = retouched) instead of the result | use to check |
 
 Use `--ref` / `--ref-image` whenever more than one face is in the shot (artist + client, two friends): without it, only the most prominent face is found and the others may get the mask. Check with `--debug-mask` when unsure. The script prints how many frames lost the face; if that is high, tell the user.
+
+### More than one person
+
+One run retouches one face. To retouch several people, run **one pass per person, chained**: pass 1 reads the original and writes a temporary file; pass 2 reads that and writes the final output; and so on. Each pass has its own reference and its own settings: `--guard 0.06` only for a person wearing PMU, no guard for the artist's own face.
+
+```bash
+$PY $S/retouch.py IN.mp4 TMP.mp4 --ref 0.5               # pass 1: the artist, alone at 0.5 s
+$PY $S/retouch.py TMP.mp4 OUT.mp4 --ref 40 --guard 0.06  # pass 2: the client with PMU, alone at 40 s
+```
+
+1. **Find the reference moments yourself.** Sample a frame every few seconds (ffmpeg), count the faces in each and look at a contact sheet to see who is where. Pick, for each person, a moment where they are alone, facing the camera, with no hand over the face. If a person is never alone, ask the user for a separate photo of them alone and use `--ref-image`.
+2. **Confirm who is who** with the user before running ("the client is the one in the blue shirt, from 12 s?").
+3. **Check each pass's last line.** The frames it retouched (total minus "face missed") should match roughly the time that person is on screen, and "other faces left alone" should match the time the others are. A big mismatch means a wrong reference: pick another moment.
+4. Write temporary files in a scratch/temp folder and delete them at the end. Make the before/after comparison against the **original**, not against an intermediate file.
+
+Each pass re-encodes the video at high quality (CRF 15): two or three passes show no visible loss.
 
 Slim and teeth are only applied when the user asks for them.
 

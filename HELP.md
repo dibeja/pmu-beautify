@@ -11,6 +11,7 @@
 - *"Very subtle retouch"* / *"a bit stronger"*
 - *"It's me in the video, I'm not wearing PMU"* — retouch closer to eyes and lips
 - *"There are two of us: retouch only me"* — the other person is left exactly as is
+- *"Retouch both of us"* — each person with their own settings (PMU protection only for whoever wears it)
 - *"Also slim the jaw a little"* / *"whiten the teeth"* — only if you ask
 - *"Make a before/after to show the client"* — side-by-side photo or video with labels
 - *"Show me what gets retouched"* — the mask, white = retouched area

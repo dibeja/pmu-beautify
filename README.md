@@ -47,7 +47,7 @@ See [HELP.md](HELP.md) — or write *pmu-beautify help* to the agent. In short:
 
 - retouch a photo or a video (or just a segment of it), subtle / natural / strong
 - PMU protected: eyeliner and lip line stay exactly as they are — the default on clients
-- retouch only one person in a group photo/video
+- retouch only one person in a group photo/video, or each of them with their own settings
 - slim jaw/chin a little, whiten teeth (only if you ask)
 - a side-by-side **before/after** image or video for approval (optional)
 - a **wizard** that asks you one question at a time
@@ -103,7 +103,7 @@ Vedi [HELP.md](HELP.md), oppure scrivi *pmu-beautify help* all'agente. In breve:
 
 - ritoccare una foto o un video (anche solo un pezzo), leggero / naturale / deciso
 - PMU protetto: eyeliner e contorno labbra restano identici — di default sulle clienti
-- ritoccare una sola persona in una foto/video di gruppo
+- ritoccare una sola persona in una foto/video di gruppo, oppure ciascuna con le sue impostazioni
 - snellire leggermente mascella/mento, sbiancare i denti (solo se lo chiedi)
 - un confronto **prima/dopo** affiancato, foto o video, per l'approvazione (opzionale)
 - un **wizard** che ti fa una domanda alla volta
