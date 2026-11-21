@@ -13,12 +13,14 @@ Always talk to the user in their language. Keep option names (`--guard` etc.) ou
 
 - **Help** — the user writes `pmu-beautify help` (or just `help` while using the skill), asks how it works or what they can ask: show [HELP.md](HELP.md) translated into their language, then offer the wizard.
 - **Wizard** — the user writes `pmu-beautify wizard` or asks to be guided step by step, or invokes the skill without a file or without saying who is in it: ask the questions below **one at a time**, waiting for each answer, skipping any the user already answered. Then say in one line what you will do and run it.
+
+  If your agent has a multiple-choice question tool (e.g. `AskUserQuestion` in Claude Code), use it for every question that has choices, with the recommended option first and a free-text answer allowed; it takes at most 4 options, so with more people than that ask in two steps. If it has no such tool, ask in chat with numbered options. Question 1 is always asked in chat (a path cannot be picked from a list).
   1. **File** — which photo or video? (path, or drag it into the chat)
   2. **Who is in it** — the artist (the user) / a client wearing PMU / more than one person? If more than one: retouch one of them, or each of them? Then confirm who is who (e.g. "the artist is the one in the apron, 0–11 s?") and whether each wears PMU. The reference moments are found by you (see "More than one person"); ask for a separate photo of a person only when they are never alone in the shot. Questions 3 and 4 may then be answered per person.
   3. **Strength** — subtle / natural (recommended) / strong → `--amount 0.4 / 0.6 / 0.8`
   4. **Extras** — none (recommended) / slimmer jaw / whiter teeth / both
   5. **Video only: which part** — whole video, or from second X for Y seconds?
-  6. **Comparison** — also make a before/after side-by-side? If yes, the two labels in their language.
+  6. **Comparison** — also make a before/after side-by-side? If yes, the two labels in their language: offer two ready pairs (e.g. "BEFORE / AFTER", "ORIGINAL / RETOUCHED", translated), free text for others.
 
 ## First run: install what is missing
 
