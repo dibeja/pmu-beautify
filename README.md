@@ -27,7 +27,7 @@ Then restart your agent.
 
 ## First use
 
-Just ask: *"beautify this photo: ~/Desktop/client.jpg"*, or *"pmu-beautify help"*, or *"guide me through pmu-beautify"* for a step-by-step wizard. On the first run the skill installs what it needs:
+Just ask: *"beautify this photo: ~/Desktop/client.jpg"*, or *"pmu-beautify help"*, or *"pmu-beautify wizard"* for a step-by-step wizard. On the first run the skill installs what it needs:
 
 | | macOS | Windows 10/11 |
 |---|---|---|
@@ -43,7 +43,7 @@ To remove everything: delete the `pmu-beautify` folder from your agent's skills 
 
 ## What you can ask
 
-See [HELP.md](HELP.md) — or just ask the agent for *help*. In short:
+See [HELP.md](HELP.md) — or write *pmu-beautify help* to the agent. In short:
 
 - retouch a photo or a video (or just a segment of it), subtle / natural / strong
 - PMU protected: eyeliner and lip line stay exactly as they are — the default on clients
@@ -83,7 +83,7 @@ Poi riavvia l'agente.
 
 ### Primo utilizzo
 
-Chiedi e basta: *"ritocca la pelle in questa foto: ~/Desktop/cliente.jpg"*, oppure *"pmu-beautify aiuto"*, oppure *"guidami con pmu-beautify"* per un wizard passo passo. Alla prima esecuzione la skill installa ciò che serve:
+Chiedi e basta: *"ritocca la pelle in questa foto: ~/Desktop/cliente.jpg"*, oppure *"pmu-beautify help"*, oppure *"pmu-beautify wizard"* per un wizard passo passo. Alla prima esecuzione la skill installa ciò che serve:
 
 | | macOS | Windows 10/11 |
 |---|---|---|
@@ -99,7 +99,7 @@ Per rimuovere tutto: cancella la cartella `pmu-beautify` dalla cartella skill de
 
 ### Cosa puoi chiedere
 
-Vedi [HELP.md](HELP.md), oppure chiedi *aiuto* all'agente. In breve:
+Vedi [HELP.md](HELP.md), oppure scrivi *pmu-beautify help* all'agente. In breve:
 
 - ritoccare una foto o un video (anche solo un pezzo), leggero / naturale / deciso
 - PMU protetto: eyeliner e contorno labbra restano identici — di default sulle clienti

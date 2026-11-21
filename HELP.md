@@ -14,7 +14,7 @@
 - *"Also slim the jaw a little"* / *"whiten the teeth"* — only if you ask
 - *"Make a before/after to show the client"* — side-by-side photo or video with labels
 - *"Show me what gets retouched"* — the mask, white = retouched area
-- *"Guide me"* / *"wizard"* — I ask you one question at a time
+- *"pmu-beautify wizard"* — I ask you one question at a time
 
 **What it will not do.** It will not smooth or change the treated area of a result (brows, lips, eyeliner, areola). Retouching the work itself is misleading advertising.
 

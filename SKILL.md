@@ -1,6 +1,6 @@
 ---
 name: pmu-beautify
-description: Face-aware skin retouch ("beauty" / "beautify" pass) for photos and videos of permanent-makeup (PMU) artists and their clients — smooths lines, blotches and under-eye texture while keeping pores, and never touches brows, eyes, lips or the PMU work itself. Optional before/after comparison, jaw slim, teeth whitening, and retouching only one chosen person in a group shot. Has a help page and a step-by-step wizard. Use whenever the user wants to beautify, retouch, smooth skin, "ritocca la pelle", "fai il beauty", "bőrretus", soften wrinkles on a face in a photo or a video (reel, story, testimonial, talking head), even if they only drop a file and say "make her skin nicer", or asks "pmu-beautify help" / "how does pmu-beautify work". macOS and Windows.
+description: Face-aware skin retouch ("beauty" / "beautify" pass) for photos and videos of permanent-makeup (PMU) artists and their clients — smooths lines, blotches and under-eye texture while keeping pores, and never touches brows, eyes, lips or the PMU work itself. Optional before/after comparison, jaw slim, teeth whitening, and retouching only one chosen person in a group shot. Has a help page and a step-by-step wizard. Use whenever the user wants to beautify, retouch, smooth skin, soften wrinkles on a face in a photo or a video (reel, story, testimonial, talking head), in any language, even if they only drop a file and say "make her skin nicer", or asks "pmu-beautify help" / "how does pmu-beautify work". macOS and Windows.
 ---
 
 # pmu-beautify
@@ -11,8 +11,8 @@ Always talk to the user in their language. Keep option names (`--guard` etc.) ou
 
 ## Help and wizard
 
-- **Help** — the user writes `help`, `aiuto`, `segítség`, `hilfe`, asks how it works or what they can ask: show [HELP.md](HELP.md) translated into their language, then offer the wizard.
-- **Wizard** — the user asks for it ("guidami", "wizard", "step by step"), or invokes the skill without a file or without saying who is in it: ask the questions below **one at a time**, waiting for each answer, skipping any the user already answered. Then say in one line what you will do and run it.
+- **Help** — the user writes `pmu-beautify help` (or just `help` while using the skill), asks how it works or what they can ask: show [HELP.md](HELP.md) translated into their language, then offer the wizard.
+- **Wizard** — the user writes `pmu-beautify wizard` or asks to be guided step by step, or invokes the skill without a file or without saying who is in it: ask the questions below **one at a time**, waiting for each answer, skipping any the user already answered. Then say in one line what you will do and run it.
   1. **File** — which photo or video? (path, or drag it into the chat)
   2. **Who is in it** — the artist (the user) / a client wearing PMU / more than one person? If more than one: who should be retouched? (for a video, a moment where that person is alone; for a photo, a separate photo of that person alone)
   3. **Strength** — subtle / natural (recommended) / strong → `--amount 0.4 / 0.6 / 0.8`
@@ -80,7 +80,7 @@ Only when the user asks for it (offer it once after the retouch, e.g. "want a si
 $PY $S/compare.py BEFORE AFTER OUT --labels "ORIGINAL,RETOUCHED"
 ```
 
-Photo pair → `.jpg`, video pair → `.mp4` (audio from BEFORE). Labels in the user's language, ASCII only (no accents): e.g. `"PRIMA,DOPO"`, `"ELOTTE,UTANA"`. If `--ss/--t` was used for the retouch, compare against the same segment of the original (cut it first with ffmpeg), not the full clip.
+Photo pair → `.jpg`, video pair → `.mp4` (audio from BEFORE). Labels in the user's language, ASCII only (no accents): e.g. `"BEFORE,AFTER"` translated. If `--ss/--t` was used for the retouch, compare against the same segment of the original (cut it first with ffmpeg), not the full clip.
 
 ## Check before handing over
 
